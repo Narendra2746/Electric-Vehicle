@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ev Database</title>
+        <link type="text/css" href="{{ url_for('static', path='/styles.css')}}" rel="stylesheet"/>
+        <script type="module" src="{{ url_for ('static', path='/firebase-login.js') }}"></script>
+    </head>
+    <body>
+        <div id="login-box" hidden="true">
+            Email:<input type="email" name="" id="email"><br/>
+            Password: <input type="password" name="" id="password"><br/>
+            <form action="user.html">
+                <button id="login-box" class="button">Login</button>
+            </form>
+            <button id="sign-up">Sign Up</button>
+        </div>
+        <button id="sign-out" hidden="true">Sign out</button>
+        <form action="guest.html">
+            <button type="submit" class="button">Guest</button>
+        </form>
+
+        
+        {% if user_token %}
+            <p>User email: {{ user_token.email }}</p>
+            <p>error message: {{ error_message}}</p>
+            <p>String type: {{ user_info.get('string') }}</p>
+            <p>Int type: {{ user_info.get('int') }}</p>
+            <p>Float type: {{ user_info.get('float') }}</p>
+            <p>Boolean type: {{ user_info.get('boolean') }}</p>
+            <p>Datetime type: {{ user_info.get('datetime') }}</p>
+            {% for value in user_info.get('array') %}
+                <p>Array index {{ loop.index0 }} {{ loop.index }} {{ value }}</p>
+            {% endfor %}
+
+            {% for key, value in user_info.get('map').items() %}
+                <p>{{ key }}: {{ value }}</p>
+            {% endfor %}
+        {% endif %}   
+    </body>
+</html>
